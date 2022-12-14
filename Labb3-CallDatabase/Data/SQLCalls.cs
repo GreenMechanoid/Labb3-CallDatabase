@@ -30,6 +30,7 @@ namespace Labb3_CallDatabase.Data
 
             do
             {
+                //Cases represents the diffrent options, and has local SQL Query to reflect that choise
                 switch (Selection)
                 {
                     default:
@@ -101,6 +102,7 @@ namespace Labb3_CallDatabase.Data
 
         }
 
+        //Staff
         public void TryConnection(string SQLCountString, string SQLDataSelection)
         {
             SqlDataReader dr;
@@ -108,7 +110,21 @@ namespace Labb3_CallDatabase.Data
             {
                 cmd.CommandText = SQLCountString;
                 conn.Open();
-                if (conn.State == ConnectionState.Open)
+                //If Statement Checks incoming string for what table it's about
+                if (conn.State == ConnectionState.Open && SQLCountString.Contains("FROM Staff") == true)
+                {
+                    object objCount = cmd.ExecuteScalar();
+                    int iCount = (int)objCount;
+                    cmd.CommandText = SQLDataSelection;
+                    dr = cmd.ExecuteReader(CommandBehavior.SingleResult);
+                    // For loop to read everything from the table  
+                    for (int i = 0; i < iCount; i++)
+                    {
+                        dr.Read(); // Read one row from the table  
+                        Console.WriteLine("StaffID: {0}  Name: {1}  Occupation: {2}", dr[0], dr[1], dr[2]);
+                    }
+                }
+                else if (conn.State == ConnectionState.Open && SQLCountString.Contains("FROM Grades"))
                 {
                     object objCount = cmd.ExecuteScalar();
                     int iCount = (int)objCount;
