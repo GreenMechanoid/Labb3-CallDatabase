@@ -54,8 +54,12 @@ namespace Labb3_CallDatabase
                     case 3:
                         goto default;
                     case 4:
+                        sql.GetGradesMonth();
+                        Thread.Sleep(5000);
+                        Console.Clear();
                         goto default;
                     case 5:
+                        sql.GetCourseGrades();
                         goto default;
                     case 6:
                         goto default;

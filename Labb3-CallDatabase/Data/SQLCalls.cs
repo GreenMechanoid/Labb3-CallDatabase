@@ -102,10 +102,9 @@ namespace Labb3_CallDatabase.Data
 
         }
 
-        //Staff
         public void TryConnection(string SQLCountString, string SQLDataSelection)
         {
-            SqlDataReader dr;
+            SqlDataReader dr; // Middle hand for calls between C# and SQL Select request
             try
             {
                 cmd.CommandText = SQLCountString;
@@ -121,20 +120,33 @@ namespace Labb3_CallDatabase.Data
                     for (int i = 0; i < iCount; i++)
                     {
                         dr.Read(); // Read one row from the table  
-                        Console.WriteLine("StaffID: {0}  Name: {1}  Occupation: {2}", dr[0], dr[1], dr[2]);
+                        Console.WriteLine("StaffID: {0}\tName: {1}\tOccupation: {2}", dr[0], dr[1], dr[2]);
                     }
                 }
-                else if (conn.State == ConnectionState.Open && SQLCountString.Contains("FROM Grades"))
+                else if (conn.State == ConnectionState.Open && SQLCountString.Contains("FROM Grade WHERE GradingDate") == true)
                 {
                     object objCount = cmd.ExecuteScalar();
                     int iCount = (int)objCount;
                     cmd.CommandText = SQLDataSelection;
                     dr = cmd.ExecuteReader(CommandBehavior.SingleResult);
-                    // For loop to read everything from the table  
+
                     for (int i = 0; i < iCount; i++)
                     {
-                        dr.Read(); // Read one row from the table  
-                        Console.WriteLine("StaffID: {0}  Name: {1}  Occupation: {2}", dr[0], dr[1], dr[2]);
+                        dr.Read();
+                        Console.WriteLine("Student: {0}\tCoursename: {1}\tGrade: {2}\tGradeingDate: {3}", dr[0], dr[1], dr[2], dr[3]);
+                    }
+                }
+                else if (conn.State == ConnectionState.Open && SQLCountString.Contains("FROM Grade Group by Grade.CourseID") == true)
+                {
+                    object objCount = cmd.ExecuteScalar();
+                    int iCount = (int)objCount;
+                    cmd.CommandText = SQLDataSelection;
+                    dr = cmd.ExecuteReader(CommandBehavior.SingleResult);
+
+                    for (int i = 0; i <= iCount; i++)
+                    {
+                        dr.Read();
+                        Console.WriteLine("Coursename: {0}  Lowest Grade: {1} Average Grade: {2} Top Grade: {3} ", dr[0], dr[1], dr[2], dr[3]);
                     }
                 }
             }
@@ -146,6 +158,24 @@ namespace Labb3_CallDatabase.Data
             {
                 conn.Close();
             }
+        }
+        
+        public void GetGradesMonth()
+        {
+            string SQLCountString, SQLQuery;
+
+            SQLCountString = "SELECT Count(*) FROM Grade WHERE GradingDate BETWEEN DATEADD(mm, DATEDIFF(mm,0,getdate())-1, 0) AND DATEADD(mm, 1, DATEADD(mm, DATEDIFF(mm,0,getdate())-1, 0))";
+            SQLQuery = "SELECT Students.Fullname,Course.Coursename ,Grade.Grade ,Grade.GradingDate FROM Grade inner join Students on Grade.StudentID=Students.StudentID left join Course on Course.CourseID=Grade.GradeID WHERE GradingDate BETWEEN DATEADD(mm, DATEDIFF(mm,0,getdate())-1, 0) AND DATEADD(mm, 1, DATEADD(mm, DATEDIFF(mm,0,getdate())-1, 0))";
+            TryConnection(SQLCountString, SQLQuery);
+        }
+
+        public void GetCourseGrades()
+        {
+            string SQLCountString, SQLQuery;
+
+            SQLCountString = "SELECT Count(*) FROM Grade Group by Grade.CourseID";
+            SQLQuery = "SELECT Course.Coursename ,MIN(Grade.Grade) as 'Lowest Grade', MAX(Grade.Grade) 'Average Grade',AVG(Grade.Grade) 'Top Grade' FROM Grade INNER JOIN Course on Course.CourseID = Grade.CourseID Group by Course.Coursename";
+            TryConnection(SQLCountString, SQLQuery);
         }
     }
 }
