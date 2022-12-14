@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labb3-CallDatabase", "Labb3-CallDatabase\Labb3-CallDatabase.csproj", "{C23327C8-11CF-4B6F-9D7B-3BF80EA4546B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C23327C8-11CF-4B6F-9D7B-3BF80EA4546B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C23327C8-11CF-4B6F-9D7B-3BF80EA4546B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C23327C8-11CF-4B6F-9D7B-3BF80EA4546B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C23327C8-11CF-4B6F-9D7B-3BF80EA4546B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0887B7D3-0A92-4CF5-801F-683F2480211E}
+	EndGlobalSection
+EndGlobal
