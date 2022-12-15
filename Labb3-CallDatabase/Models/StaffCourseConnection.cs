@@ -1,4 +1,5 @@
-﻿using System;
+﻿// .Net22 Daniel Svensson
+using System;
 using System.Collections.Generic;
 
 namespace Labb3_CallDatabase.Models

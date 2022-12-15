@@ -1,4 +1,4 @@
-﻿
+﻿// .Net22 Daniel Svensson
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace Labb3_CallDatabase.Data
+namespace Labb3_CallDatabase
 {
     internal class SQLCalls
     {
@@ -59,37 +59,37 @@ namespace Labb3_CallDatabase.Data
                         break;
                     case 1:
                         SQLCountString = "SELECT Count(*) FROM Staff";
-                        SQLQuery = "SELECT StaffID, Fullname, Occupation FROM Staff ORDER BY StaffID";
+                        SQLQuery = "SELECT StaffID, Firstname, Lastname, Occupation FROM Staff ORDER BY StaffID";
                         TryConnection(SQLCountString, SQLQuery);
                         Thread.Sleep(5000);
                         goto default;
                     case 2:
                         SQLCountString = "SELECT Count(*) FROM Staff Where Occupation = 'Teacher'";
-                        SQLQuery = "SELECT StaffID, Fullname, Occupation FROM Staff Where Occupation = 'Teacher' ORDER BY StaffID";
+                        SQLQuery = "SELECT StaffID, Firstname, Lastname, Occupation FROM Staff Where Occupation = 'Teacher' ORDER BY StaffID";
                         TryConnection(SQLCountString, SQLQuery);
                         Thread.Sleep(5000);
                         goto default;
                     case 3:
                         SQLCountString = "SELECT Count(*) FROM Staff Where Occupation = 'Secretary'";
-                        SQLQuery = "SELECT StaffID, Fullname, Occupation FROM Staff Where Occupation = 'Secretary' ORDER BY StaffID";
+                        SQLQuery = "SELECT StaffID, Firstname, Lastname, Occupation FROM Staff Where Occupation = 'Secretary' ORDER BY StaffID";
                         TryConnection(SQLCountString, SQLQuery);
                         Thread.Sleep(5000);
                         goto default;
                     case 4:
                         SQLCountString = "SELECT Count(*) FROM Staff Where Occupation = 'Principal'";
-                        SQLQuery = "SELECT StaffID, Fullname, Occupation FROM Staff Where Occupation = 'Principal' ORDER BY StaffID";
+                        SQLQuery = "SELECT StaffID, Firstname, Lastname, Occupation FROM Staff Where Occupation = 'Principal' ORDER BY StaffID";
                         TryConnection(SQLCountString, SQLQuery);
                         Thread.Sleep(5000);
                         goto default;
                     case 5:
                         SQLCountString = "SELECT Count(*) FROM Staff Where Occupation = 'Janitor'";
-                        SQLQuery = "SELECT StaffID, Fullname, Occupation FROM Staff Where Occupation = 'Janitor' ORDER BY StaffID";
+                        SQLQuery = "SELECT StaffID, Firstname, Lastname, Occupation FROM Staff Where Occupation = 'Janitor' ORDER BY StaffID";
                         TryConnection(SQLCountString, SQLQuery);
                         Thread.Sleep(5000);
                         goto default;
                     case 6:
                         SQLCountString = "SELECT Count(*) FROM Staff Where Occupation LIKE '%Cafeteria%'";
-                        SQLQuery = "SELECT StaffID, Fullname, Occupation FROM Staff Where Occupation LIKE '%Cafeteria%' ORDER BY StaffID";
+                        SQLQuery = "SELECT StaffID, Firstname, Lastname, Occupation FROM Staff Where Occupation LIKE '%Cafeteria%' ORDER BY StaffID";
                         TryConnection(SQLCountString, SQLQuery);
                         Thread.Sleep(5000);
                         goto default;
@@ -120,7 +120,7 @@ namespace Labb3_CallDatabase.Data
                     for (int i = 0; i < iCount; i++)
                     {
                         dr.Read(); // Read one row from the table  
-                        Console.WriteLine("StaffID: {0}\tName: {1}\tOccupation: {2}", dr[0], dr[1], dr[2]);
+                        Console.WriteLine("StaffID: {0}\nName: {1} {2}\nOccupation: {3}\n-----------", dr[0], dr[1], dr[2], dr[3]);
                     }
                 }
                 else if (conn.State == ConnectionState.Open && SQLCountString.Contains("FROM Grade WHERE GradingDate") == true)
@@ -133,7 +133,7 @@ namespace Labb3_CallDatabase.Data
                     for (int i = 0; i < iCount; i++)
                     {
                         dr.Read();
-                        Console.WriteLine("Student: {0}\tCoursename: {1}\tGrade: {2}\tGradeingDate: {3}", dr[0], dr[1], dr[2], dr[3]);
+                        Console.WriteLine("Student: {0}\nCoursename: {1}\nGrade: {2}\nGradeingDate: {3}\n--------", dr[0], dr[1], dr[2], dr[3]);
                     }
                 }
                 else if (conn.State == ConnectionState.Open && SQLCountString.Contains("FROM Grade Group by Grade.CourseID") == true)
@@ -146,7 +146,7 @@ namespace Labb3_CallDatabase.Data
                     for (int i = 0; i <= iCount; i++)
                     {
                         dr.Read();
-                        Console.WriteLine("Coursename: {0}  Lowest Grade: {1} Average Grade: {2} Top Grade: {3} ", dr[0], dr[1], dr[2], dr[3]);
+                        Console.WriteLine("Coursename: {0}\n  Lowest Grade: {1}\n Average Grade: {2}\n Top Grade: {3} \n-----------", dr[0], dr[1], dr[2], dr[3]);
                     }
                 }
             }
@@ -159,13 +159,13 @@ namespace Labb3_CallDatabase.Data
                 conn.Close();
             }
         }
-        
+
         public void GetGradesMonth()
         {
             string SQLCountString, SQLQuery;
 
             SQLCountString = "SELECT Count(*) FROM Grade WHERE GradingDate BETWEEN DATEADD(mm, DATEDIFF(mm,0,getdate())-1, 0) AND DATEADD(mm, 1, DATEADD(mm, DATEDIFF(mm,0,getdate())-1, 0))";
-            SQLQuery = "SELECT Students.Fullname,Course.Coursename ,Grade.Grade ,Grade.GradingDate FROM Grade inner join Students on Grade.StudentID=Students.StudentID left join Course on Course.CourseID=Grade.GradeID WHERE GradingDate BETWEEN DATEADD(mm, DATEDIFF(mm,0,getdate())-1, 0) AND DATEADD(mm, 1, DATEADD(mm, DATEDIFF(mm,0,getdate())-1, 0))";
+            SQLQuery = "SELECT Students.Firstname,Students.Lastname ,Course.Coursename ,Grade.Grade ,Grade.GradingDate FROM Grade inner join Students on Grade.StudentID=Students.StudentID left join Course on Course.CourseID=Grade.GradeID WHERE GradingDate BETWEEN DATEADD(mm, DATEDIFF(mm,0,getdate())-1, 0) AND DATEADD(mm, 1, DATEADD(mm, DATEDIFF(mm,0,getdate())-1, 0))";
             TryConnection(SQLCountString, SQLQuery);
         }
 
@@ -191,7 +191,9 @@ namespace Labb3_CallDatabase.Data
                 {
                     inputdata.Clear();
                 }
-                Console.WriteLine("input Students Fullname");
+                Console.WriteLine("input Students Firstname");
+                inputdata.Add(Console.ReadLine());
+                Console.WriteLine("input Students Lastname");
                 inputdata.Add(Console.ReadLine());
                 Console.WriteLine("Enter DateofBirth 'XXXX-XX-XX'");
                 tempString = Console.ReadLine();
@@ -246,11 +248,11 @@ namespace Labb3_CallDatabase.Data
                 conn.Open();
                 if (conn.State == ConnectionState.Open)
                 {
-                    cmd.CommandText = $"INSERT INTO Students (Students.Fullname,Students.Dateofbirth,Students.Classnumber,Students.Adress,Students.PostalCode) " +
-                        $"VALUES ('{inputdata[0].Replace("'", "''")}',{inputdata[1]},'{inputdata[2].Replace("'", "''")}','{inputdata[3].Replace("'","''")}','{inputdata[4]}')";
+                    cmd.CommandText = $"INSERT INTO Students (Students.Firstname,Students.Lastname,Students.Dateofbirth,Students.Classnumber,Students.Adress,Students.PostalCode) " +
+                        $"VALUES ('{inputdata[0].Replace("'", "''")}','{inputdata[1].Replace("'", "''")}',{inputdata[2]},'{inputdata[3].Replace("'", "''")}','{inputdata[4].Replace("'", "''")}','{inputdata[5].Replace("'", "''")}')";
                     cmd.ExecuteScalar();
 
-                    Console.WriteLine($"Student: {inputdata[0]} has been added to the Database");
+                    Console.WriteLine($"Student: {inputdata[0] + " " + inputdata[1]} has been added to the Database");
                 }
             }
             catch (Exception exp)

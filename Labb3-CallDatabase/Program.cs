@@ -1,5 +1,4 @@
-﻿using Labb3_CallDatabase.Data;
-using Microsoft.Data.SqlClient;
+﻿// .Net22 Daniel Svensson
 
 namespace Labb3_CallDatabase
 {
@@ -21,27 +20,28 @@ namespace Labb3_CallDatabase
                         navigation = 0; keepLooping = true; correctInput = false;
                         do
                         {
-                        Console.WriteLine("Main Menu . Please choose a option");
-                        Console.WriteLine("1: Listing of Employees"); //SQL
-                        Console.WriteLine("2: Listing of Students"); //Entity
-                        Console.WriteLine("3: Listing class of students");//Entity
-                        Console.WriteLine("4: List Grades set previous month"); //SQL
-                        Console.WriteLine("5: List Average grade in all classes"); //SQL
-                        Console.WriteLine("6: Add new Student"); //SQL
-                        Console.WriteLine("7: Add new Employee");//Entity
-                        Console.WriteLine("9: Exit program.");
-                        int.TryParse(Console.ReadLine(), out navigation); // error checking on input, keeps looping until correct input
-                        if (navigation == 1 || navigation == 2 || navigation == 3 ||
-                            navigation == 4 || navigation == 5 || navigation == 6 ||
-                            navigation == 7 || navigation == 9)
-                        {
-                                correctInput = true;
-                        }
-                        else
-                        {
-                                Console.Clear(); // clears to not flood the console with same info
-                                Console.WriteLine("Wrong input, Try again.");
-                        }
+                            Console.Clear();
+                            Console.WriteLine("Main Menu . Please choose a option");
+                            Console.WriteLine("1: Listing of Employees"); //SQL
+                            Console.WriteLine("2: Listing of Students"); //Entity
+                            Console.WriteLine("3: Listing class of students");//Entity
+                            Console.WriteLine("4: List Grades set previous month"); //SQL
+                            Console.WriteLine("5: List Average grade in all classes"); //SQL
+                            Console.WriteLine("6: Add new Student"); //SQL
+                            Console.WriteLine("7: Add new Employee");//Entity
+                            Console.WriteLine("9: Exit program.");
+                            int.TryParse(Console.ReadLine(), out navigation); // error checking on input, keeps looping until correct input
+                            if (navigation == 1 || navigation == 2 || navigation == 3 ||
+                                navigation == 4 || navigation == 5 || navigation == 6 ||
+                                navigation == 7 || navigation == 9)
+                            {
+                                    correctInput = true;
+                            }
+                            else
+                            {
+                                    Console.Clear(); // clears to not flood the console with same info
+                                    Console.WriteLine("Wrong input, Try again.");
+                            }
 
                         } while (!correctInput);
                         break;
@@ -51,12 +51,12 @@ namespace Labb3_CallDatabase
                         goto default;
                     case 2:
                         Console.Clear();
-
+                        efcalls.ListAllStudents();
                         Thread.Sleep(5000);
                         goto default;
                     case 3:
                         Console.Clear();
-
+                        efcalls.ListAllInClass();
                         Thread.Sleep(5000);
                         goto default;
                     case 4:
@@ -76,7 +76,7 @@ namespace Labb3_CallDatabase
                         goto default;
                     case 7:
                         Console.Clear();
-
+                        efcalls.AddNewStaff();
                         Thread.Sleep(5000);
                         goto default;
                     case 9:

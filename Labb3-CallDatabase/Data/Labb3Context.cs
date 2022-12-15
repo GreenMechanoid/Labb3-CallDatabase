@@ -18,7 +18,7 @@ namespace Labb3_CallDatabase.Data
         }
 
         public virtual DbSet<Course> Courses { get; set; } = null!;
-        public virtual DbSet<Grade> Grades { get; set; } = null!;
+        public virtual DbSet<Grade> Grade { get; set; } = null!;
         public virtual DbSet<StaffCourseConnection> StaffCourseConnections { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
         public virtual DbSet<staff> staff { get; set; } = null!;
@@ -65,9 +65,9 @@ namespace Labb3_CallDatabase.Data
                 entity.Property(e => e.StudentId).HasColumnName("StudentID");
 
                 entity.HasOne(d => d.Course)
-                    .WithMany(p => p.Grades)
+                    .WithMany(p => p.Grade)
                     .HasForeignKey(d => d.CourseId)
-                    .HasConstraintName("FK_Grades_Course");
+                    .HasConstraintName("FK_Grade_Course");
             });
 
             modelBuilder.Entity<StaffCourseConnection>(entity =>
@@ -108,9 +108,12 @@ namespace Labb3_CallDatabase.Data
 
                 entity.Property(e => e.Dateofbirth).HasColumnType("datetime");
 
-                entity.Property(e => e.Fullname)
+                entity.Property(e => e.Firstname)
                     .HasMaxLength(80)
                     .IsUnicode(false);
+                entity.Property(e => e.Lastname)
+                     .HasMaxLength(80)
+                     .IsUnicode(false);
 
                 entity.Property(e => e.PostalCode)
                     .HasMaxLength(80)
@@ -129,7 +132,7 @@ namespace Labb3_CallDatabase.Data
 
                 entity.Property(e => e.Dateofbirth).HasColumnType("datetime");
 
-                entity.Property(e => e.Fullname)
+                entity.Property(e => e.Firstname)
                     .HasMaxLength(80)
                     .IsUnicode(false);
 
@@ -138,6 +141,9 @@ namespace Labb3_CallDatabase.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.PostalCode)
+                    .HasMaxLength(80)
+                    .IsUnicode(false);
+                entity.Property(e => e.Lastname)
                     .HasMaxLength(80)
                     .IsUnicode(false);
             });

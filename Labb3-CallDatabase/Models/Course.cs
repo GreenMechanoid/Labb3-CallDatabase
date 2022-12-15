@@ -1,4 +1,5 @@
-﻿using System;
+﻿// .Net22 Daniel Svensson
+using System;
 using System.Collections.Generic;
 
 namespace Labb3_CallDatabase.Models
@@ -7,7 +8,7 @@ namespace Labb3_CallDatabase.Models
     {
         public Course()
         {
-            Grades = new HashSet<Grade>();
+            Grade = new HashSet<Grade>();
             StaffCourseConnections = new HashSet<StaffCourseConnection>();
         }
 
@@ -15,7 +16,7 @@ namespace Labb3_CallDatabase.Models
         public string? Schoolyear { get; set; }
         public string? Coursename { get; set; }
 
-        public virtual ICollection<Grade> Grades { get; set; }
+        public virtual ICollection<Grade> Grade { get; set; }
         public virtual ICollection<StaffCourseConnection> StaffCourseConnections { get; set; }
     }
 }

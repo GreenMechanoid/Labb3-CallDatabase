@@ -1,4 +1,5 @@
-﻿using System;
+﻿// .Net22 Daniel Svensson
+using System;
 using System.Collections.Generic;
 
 namespace Labb3_CallDatabase.Models
@@ -11,13 +12,14 @@ namespace Labb3_CallDatabase.Models
         }
 
         public int StaffId { get; set; }
-        public string? Fullname { get; set; }
+        public string? Firstname { get; set; }
         public string? Occupation { get; set; }
         public double? Salary { get; set; }
         public DateTime? Dateofbirth { get; set; }
         public string? Adress { get; set; }
         public string? PostalCode { get; set; }
 
+        public string? Lastname { get; set; }
         public virtual ICollection<StaffCourseConnection> StaffCourseConnections { get; set; }
     }
 }
