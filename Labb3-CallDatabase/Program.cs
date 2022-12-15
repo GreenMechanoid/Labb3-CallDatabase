@@ -50,20 +50,34 @@ namespace Labb3_CallDatabase
                         sql.GetEmployees();
                         goto default;
                     case 2:
+                        Console.Clear();
+
+                        Thread.Sleep(5000);
                         goto default;
                     case 3:
+                        Console.Clear();
+
+                        Thread.Sleep(5000);
                         goto default;
                     case 4:
+                        Console.Clear();
                         sql.GetGradesMonth();
                         Thread.Sleep(5000);
-                        Console.Clear();
                         goto default;
                     case 5:
+                        Console.Clear();
                         sql.GetCourseGrades();
+                        Thread.Sleep(5000);
                         goto default;
                     case 6:
+                        Console.Clear();
+                        sql.AddStudent();
+                        Thread.Sleep(5000);
                         goto default;
                     case 7:
+                        Console.Clear();
+
+                        Thread.Sleep(5000);
                         goto default;
                     case 9:
                         keepLooping = false;

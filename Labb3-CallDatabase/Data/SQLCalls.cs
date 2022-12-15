@@ -177,5 +177,90 @@ namespace Labb3_CallDatabase.Data
             SQLQuery = "SELECT Course.Coursename ,MIN(Grade.Grade) as 'Lowest Grade', MAX(Grade.Grade) 'Average Grade',AVG(Grade.Grade) 'Top Grade' FROM Grade INNER JOIN Course on Course.CourseID = Grade.CourseID Group by Course.Coursename";
             TryConnection(SQLCountString, SQLQuery);
         }
+
+        public void AddStudent()
+        {
+            bool correctInput = false, keepLooping = true;
+            string tempString;
+            List<string> inputdata = new();
+
+
+            do
+            {
+                if (inputdata.Count > 0)
+                {
+                    inputdata.Clear();
+                }
+                Console.WriteLine("input Students Fullname");
+                inputdata.Add(Console.ReadLine());
+                Console.WriteLine("Enter DateofBirth 'XXXX-XX-XX'");
+                tempString = Console.ReadLine();
+                if (tempString.Length != 10)
+                {
+                    Console.Clear();
+                    do
+                    {
+                        Console.WriteLine("Wrong input. Needs to be in this format xxxx-xx-xx");
+                        tempString = Console.ReadLine();
+                        if (tempString.Length == 10)
+                        {
+                            correctInput = true;
+                        }
+                    } while (!correctInput);
+                    correctInput = false;
+                }
+                inputdata.Add(tempString);
+                Console.WriteLine("Enter Class number 'Example 2A'");
+                inputdata.Add(Console.ReadLine());
+                Console.WriteLine("please enter the Adress of the student 'Ex:Barley street 27'");
+                inputdata.Add(Console.ReadLine());
+                Console.WriteLine("and lastly Enter the Postal code of the adress");
+                inputdata.Add(Console.ReadLine());
+                Console.Clear();
+                foreach (var item in inputdata)
+                {
+                    Console.WriteLine(item);
+                }
+                Console.WriteLine("is this Information correct? Y/N");
+                do
+                {
+                    ConsoleKey tempkey = Console.ReadKey(false).Key;
+                    if (tempkey == ConsoleKey.Y)
+                    {
+                        correctInput = true;
+                        keepLooping = false;
+                    }
+                    else if (tempkey == ConsoleKey.N)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Let'start from the top then: \n");
+                        break;
+                    }
+                } while (!correctInput);
+
+            } while (keepLooping);
+
+            try
+            {
+                //cmd.CommandText = "SELECT COUNT(*) FROM Students";
+                conn.Open();
+                if (conn.State == ConnectionState.Open)
+                {
+                    cmd.CommandText = $"INSERT INTO Students (Students.Fullname,Students.Dateofbirth,Students.Classnumber,Students.Adress,Students.PostalCode) " +
+                        $"VALUES ('{inputdata[0].Replace("'", "''")}',{inputdata[1]},'{inputdata[2].Replace("'", "''")}','{inputdata[3].Replace("'","''")}','{inputdata[4]}')";
+                    cmd.ExecuteScalar();
+
+                    Console.WriteLine($"Student: {inputdata[0]} has been added to the Database");
+                }
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }
