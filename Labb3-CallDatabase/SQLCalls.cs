@@ -120,7 +120,7 @@ namespace Labb3_CallDatabase
                     for (int i = 0; i < iCount; i++)
                     {
                         dr.Read(); // Read one row from the table  
-                        Console.WriteLine("StaffID: {0}\nName: {1} {2}\nOccupation: {3}\n-----------", dr[0], dr[1], dr[2], dr[3]);
+                        Console.WriteLine("StaffID: {0}\nName: {1} {2}\nOccupation: {3}\n-----------", dr[0], dr[1], dr[2], dr[3], dr[4]);
                     }
                 }
                 else if (conn.State == ConnectionState.Open && SQLCountString.Contains("FROM Grade WHERE GradingDate") == true)
@@ -133,7 +133,7 @@ namespace Labb3_CallDatabase
                     for (int i = 0; i < iCount; i++)
                     {
                         dr.Read();
-                        Console.WriteLine("Student: {0}\nCoursename: {1}\nGrade: {2}\nGradeingDate: {3}\n--------", dr[0], dr[1], dr[2], dr[3]);
+                        Console.WriteLine("Student: {0} {1}\nCoursename: {2}\nGrade: {3}\nGradeingDate: {4}\n--------", dr[0], dr[1], dr[2], dr[3], dr[4]);
                     }
                 }
                 else if (conn.State == ConnectionState.Open && SQLCountString.Contains("FROM Grade Group by Grade.CourseID") == true)
